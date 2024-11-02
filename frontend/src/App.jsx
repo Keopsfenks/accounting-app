@@ -1,9 +1,9 @@
 import React from 'react';
-import Login from "./components/pages/Login/Login.jsx";
+import Authenticator from "./components/pages/Login/Authenticator.jsx";
 
 const App = () => {
     return (
-        <Login />
+        < Authenticator />
     );
 };
 

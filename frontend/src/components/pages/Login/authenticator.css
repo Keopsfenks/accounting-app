@@ -1,0 +1,132 @@
+
+
+.container {
+    @apply text-white bg-indigo-400;
+}
+.form-container {
+    scrollbar-width: none;
+    overflow-y: scroll;
+
+    background-color: #0B0F19;
+    display: flex;
+    flex-direction: column;
+    padding-top: 5rem;
+    height: 100vh;
+    width: 50vw;
+    border-radius: 0 2.5rem 2.5rem 0;
+    align-items: center;
+    hr {
+        margin-bottom: 1rem;
+        border-radius: 10px;
+        width: 25rem;
+        background-color: #2D3139;
+    }
+    .whatsapp-btn a {
+        @apply text-indigo-700 font-bold border-b-2 border-indigo-700 pb-0.5 transition duration-300
+        hover:shadow-lg hover:text-indigo-200
+    }
+}
+
+.header {
+    margin-bottom: 5rem;
+    p {
+        margin-top: 0.35rem;
+        @apply text-gray-400;
+        a {
+            @apply text-indigo-700 border-b-2 border-indigo-700 pb-0.5 transition duration-300
+            hover:shadow-lg hover:text-indigo-200
+        }
+    }
+    h1 {
+        @apply text-4xl font-bold;
+    }
+}
+
+.form-container form {
+    .input-container {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .group-form {
+            input {
+                height: 4rem;
+                width: 18rem;
+            }
+            .form-group {
+                margin-right: 2rem;
+            }
+            display: flex;
+            flex-direction: row;
+        }
+
+        label {
+            margin-bottom: 0.5rem;
+            margin-top: 1rem;
+            @apply font-bold;
+        }
+
+        input {
+            border: 2px solid gray;
+            border-radius: 7px;
+            background-color: #10141E;
+            height: 4rem;
+            width: 38rem;
+            @apply focus:outline-none;
+        }
+    }
+
+    .social-icons {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        p {
+            @apply text-gray-400;
+        }
+        .icon {
+            margin-right: 0.5rem;
+            border: 2px solid gray;
+            justify-content: center;
+            border-radius: 7px;
+            @apply flex items-center size-11
+        }
+    }
+}
+
+.form-container .form-checkbox {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    label {
+        margin-left: 0.5rem;
+        @apply text-gray-400;
+        font-size: 1.01rem;
+    }
+    input {
+        border: 3px solid gray;
+        appearance: none;
+        background-color: #0B0F19;
+        border-radius: 3px;
+        aspect-ratio: 1;
+        height: 1.5rem;
+        font-size: 5rem;
+        @apply checked:bg-indigo-400 checked:border-indigo-400;
+    }
+}
+
+.cool-btn {
+    background-color: #272B5E;
+    border: none;
+    border-radius: 7px;
+    margin: 3rem 0;
+    justify-content: center;
+    @apply font-bold;
+    text-align: center;
+    height: 4rem;
+    width: 38rem;
+}
+
