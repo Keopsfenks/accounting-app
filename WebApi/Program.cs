@@ -1,16 +1,44 @@
+using Application;
+using Infrastructure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.OpenApi.Models;
 using Persistance;
+using WebApi.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-builder.Services.AddControllers().AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 // My dependency injection extension method
+builder.Services.AddApplication(builder.Configuration);
 builder.Services.AddPersistance(builder.Configuration);
+builder.Services.AddInfrastructure(builder.Configuration);
+
+// Add services to the container.
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(setup => {
+	var jwtSecuritySheme = new OpenApiSecurityScheme {
+		BearerFormat = "JWT",
+		Name         = "JWT Authentication",
+		In           = ParameterLocation.Header,
+		Type         = SecuritySchemeType.Http,
+		Scheme       = JwtBearerDefaults.AuthenticationScheme,
+		Description  = "Put **_ONLY_** yourt JWT Bearer token on textbox below!",
+
+		Reference = new OpenApiReference {
+			Id   = JwtBearerDefaults.AuthenticationScheme,
+			Type = ReferenceType.SecurityScheme
+		}
+	};
+
+	setup.AddSecurityDefinition(jwtSecuritySheme.Reference.Id, jwtSecuritySheme);
+
+	setup.AddSecurityRequirement(new OpenApiSecurityRequirement {
+		{ jwtSecuritySheme, Array.Empty<string>() }
+	});
+});
+
 
 var app = builder.Build();
 
@@ -26,5 +54,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+ExtensionsMiddleware.CreateFirstUser(app);
 
 app.Run();

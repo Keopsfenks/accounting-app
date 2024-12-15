@@ -8,10 +8,17 @@
 
     <ItemGroup>
       <Folder Include="Behaviors\" />
-      <Folder Include="Features\Commands\" />
-      <Folder Include="Features\Queries\" />
-      <Folder Include="Mapping\" />
-      <Folder Include="Services\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="13.0.1" />
+      <PackageReference Include="MediatR" Version="12.4.1" />
+      <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.11" />
+      <PackageReference Include="TS.Result" Version="8.0.13" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Domain\Domain.csproj" />
     </ItemGroup>
 
 </Project>

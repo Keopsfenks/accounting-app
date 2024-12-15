@@ -8,6 +8,7 @@ internal sealed class AppUserConfiguration : IEntityTypeConfiguration<AppUser> {
 	public void Configure(EntityTypeBuilder<AppUser> builder) {
 		builder.ToTable("Users");
 		builder.HasKey(p => p.Id);
+		builder.HasQueryFilter(x => !x.IsDeleted);
 		builder.Property(p => p.FirstName).HasColumnType("varchar(50)");
 		builder.Property(p => p.LastName).HasColumnType("varchar(50)");
 	}
