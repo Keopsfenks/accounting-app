@@ -1,0 +1,12 @@
+﻿{
+  "solution": {
+    "path": "accounting-app.sln",
+    "projects": [
+      "Application\\Application.csproj",
+      "Domain\\Domain.csproj",
+      "Infrastructure\\Infrastructure.csproj",
+      "Persistance\\Persistance.csproj",
+      "WebApi\\WebApi.csproj"
+    ]
+  }
+}
