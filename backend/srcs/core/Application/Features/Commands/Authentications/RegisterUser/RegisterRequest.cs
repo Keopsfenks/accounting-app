@@ -9,4 +9,4 @@ public sealed record RegisterRequest(
 	string     UserName,
 	string     Email,
 	string     Password,
-	bool       IsAdmin) : IRequest<Result<RegisterResponse>>;
+	bool       IsAdmin) : IRequest<Result<string>>;

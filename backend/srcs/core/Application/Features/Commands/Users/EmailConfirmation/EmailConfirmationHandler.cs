@@ -6,21 +6,21 @@ using TS.Result;
 namespace Application.Features.Commands.Users.EmailConfirmation;
 
 public record EmailConfirmationHandler(
-	UserManager<AppUser> userManager) : IRequestHandler<EmailConfirmationRequest, Result<EmailConfirmationResponse>> {
-	public async Task<Result<EmailConfirmationResponse>> Handle(EmailConfirmationRequest request, CancellationToken cancellationToken) {
+	UserManager<AppUser> userManager) : IRequestHandler<EmailConfirmationRequest, Result<string>> {
+	public async Task<Result<string>> Handle(EmailConfirmationRequest request, CancellationToken cancellationToken) {
 		AppUser? user = await userManager.FindByEmailAsync(request.Email);
 		
 		if (user == null) {
-			return Result<EmailConfirmationResponse>.Failure("Mail is not registered for any user.");
+			return Result<string>.Failure("Mail is not registered for any user.");
 		}
 
 		if (user.EmailConfirmed) {
-			return Result<EmailConfirmationResponse>.Failure("Mail is already confirmed.");
+			return Result<string>.Failure("Mail is already confirmed.");
 		}
 
 		user.EmailConfirmed = true;
 		await userManager.UpdateAsync(user);
 		
-		return Result<EmailConfirmationResponse>.Succeed(new EmailConfirmationResponse("Mail confirmed successfully."));
+		return Result<string>.Succeed("Mail confirmed successfully.");
 	}
 }

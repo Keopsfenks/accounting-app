@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Persistance.Migrations
 {
     /// <inheritdoc />
-    public partial class mg1 : Migration
+    public partial class mg0 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,8 +30,8 @@ namespace Persistance.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FirstName = table.Column<string>(type: "varchar(50)", nullable: false),
-                    LastName = table.Column<string>(type: "varchar(50)", nullable: false),
+                    FirstName = table.Column<string>(type: "varchar(50)", nullable: true),
+                    LastName = table.Column<string>(type: "varchar(50)", nullable: true),
                     RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RefreshTokenExpires = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),

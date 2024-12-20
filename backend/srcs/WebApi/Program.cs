@@ -1,4 +1,5 @@
 using Application;
+using DefaultAllowCorsPolicyNugetPackage;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
@@ -9,9 +10,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 // My dependency injection extension method
+builder.Services.AddDefaultCors();
 builder.Services.AddApplication(builder.Configuration);
 builder.Services.AddPersistance(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration);
+
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -50,8 +53,10 @@ if (app.Environment.IsDevelopment()) {
 
 
 app.UseHttpsRedirection();
+app.UseCors();
 
 app.UseAuthorization();
+
 
 app.MapControllers();
 

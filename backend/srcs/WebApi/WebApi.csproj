@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="DefaultAllowCorsPolicy" Version="1.0.1" />
         <PackageReference Include="MediatR" Version="12.4.1" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.11" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.11">
@@ -22,12 +23,6 @@
       <ProjectReference Include="..\core\Application\Application.csproj" />
       <ProjectReference Include="..\external\Infrastructure\Infrastructure.csproj" />
       <ProjectReference Include="..\external\Persistance\Persistance.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Content Include="..\..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
     </ItemGroup>
 
 </Project>

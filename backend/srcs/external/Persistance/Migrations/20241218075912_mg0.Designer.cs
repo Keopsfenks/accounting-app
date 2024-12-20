@@ -12,8 +12,8 @@ using Persistance.Contexts.ApplicationDb;
 namespace Persistance.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241215191823_mg1")]
-    partial class mg1
+    [Migration("20241218075912_mg0")]
+    partial class mg0
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,14 +44,12 @@ namespace Persistance.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("varchar(50)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("varchar(50)");
 
                     b.Property<bool>("LockoutEnabled")

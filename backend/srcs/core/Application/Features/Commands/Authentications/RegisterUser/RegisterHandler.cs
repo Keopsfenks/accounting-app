@@ -11,18 +11,18 @@ namespace Application.Features.Commands.Users.CreateUser;
 internal sealed record CreateHandler(
 	UserManager<AppUser> userManager,
 	IMapper mapper,
-	IMediator mediator) : IRequestHandler<RegisterRequest, Result<RegisterResponse>> {
-	public async Task<Result<RegisterResponse>> Handle(RegisterRequest request, CancellationToken cancellationToken) {
+	IMediator mediator) : IRequestHandler<RegisterRequest, Result<string>> {
+	public async Task<Result<string>> Handle(RegisterRequest request, CancellationToken cancellationToken) {
 		bool userExists = await userManager.Users.AnyAsync(p => p.UserName == request.UserName, cancellationToken);
 		
 		if (userExists) {
-			return Result<RegisterResponse>.Failure("User already exists");
+			return Result<string>.Failure("User already exists");
 		}
 		
 		bool emailExists = await userManager.Users.AnyAsync(p => p.Email == request.Email, cancellationToken);
 		
 		if (emailExists) {
-			return Result<RegisterResponse>.Failure("Email already exists");
+			return Result<string>.Failure("Email already exists");
 		}
 
 		AppUser newUser = mapper.Map<AppUser>(request);
@@ -30,12 +30,12 @@ internal sealed record CreateHandler(
 		IdentityResult result = await userManager.CreateAsync(newUser, request.Password);
 		
 		if (!result.Succeeded) {
-			return Result<RegisterResponse>.Failure(result.Errors.Select(s => s.Description).ToList());
+			return Result<string>.Failure(result.Errors.Select(s => s.Description).ToList());
 		}
 		
 		//Email Confirmation mail sending logic
 		await mediator.Publish(new UserEvents(newUser.Id), cancellationToken);
 		
-		return Result<RegisterResponse>.Succeed(new RegisterResponse("User created successfully"));
+		return Result<string>.Succeed("User created successfully");
 	}
 }

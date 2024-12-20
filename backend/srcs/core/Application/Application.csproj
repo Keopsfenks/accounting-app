@@ -8,6 +8,9 @@
 
     <ItemGroup>
       <Folder Include="Behaviors\" />
+      <Folder Include="Features\Commands\Companies\CreateCompany\" />
+      <Folder Include="Features\Commands\Companies\DeleteCompany\" />
+      <Folder Include="Features\Commands\Companies\UpdateCompany\" />
     </ItemGroup>
 
     <ItemGroup>

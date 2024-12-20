@@ -8,13 +8,13 @@ namespace Application.Features.Commands.Users.UpdateUser;
 
 public record UpdateHandler(
 	UserManager<AppUser> userManager,
-	IMapper              mapper) : IRequestHandler<UpdateRequest, Result<UpdateResponse>> {
+	IMapper              mapper) : IRequestHandler<UpdateRequest, Result<string>> {
 
-	public async Task<Result<UpdateResponse>> Handle(UpdateRequest request, CancellationToken cancellationToken) {
+	public async Task<Result<string>> Handle(UpdateRequest request, CancellationToken cancellationToken) {
 		AppUser? user = await userManager.FindByIdAsync(request.Id.ToString());
 
 		if (user is null) {
-			return Result<UpdateResponse>.Failure("User not found.");
+			return Result<string>.Failure("User not found.");
 		}
 		
 		if (user.FirstName != request.FirstName) {
@@ -25,6 +25,6 @@ public record UpdateHandler(
 			user.LastName = request.LastName;
 		}
 
-		return Result<UpdateResponse>.Succeed(new UpdateResponse("User updated successfully."));
+		return Result<string>.Succeed("User updated successfully.");
 	}
 }
