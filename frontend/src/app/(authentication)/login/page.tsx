@@ -22,19 +22,9 @@ import {http} from "@/services/HttpService";
 import {LoginModel} from "@/ResponseModel/LoginModel";
 import {ToastAction} from "@/components/ui/toast";
 
-const formSchema = z.object({
-	emailOrUsername: z.string().min(1, {
-		message: 'Email or username is required.',
-	}),
-	password: z.string().min(1, {
-		message: 'Password is required.',
-	}),
-})
-
 export default function LoginPage() {
 	const router = useRouter()
 	const [isLoading, setIsLoading] = useState(false)
-
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -124,3 +114,12 @@ export default function LoginPage() {
 	)
 }
 
+
+const formSchema = z.object({
+	emailOrUsername: z.string().min(1, {
+		message: 'Email or username is required.',
+	}),
+	password: z.string().min(1, {
+		message: 'Password is required.',
+	}),
+})

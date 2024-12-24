@@ -1,7 +1,7 @@
 ﻿using Application.Features.Commands.Authentication;
-using Application.Features.Commands.Users.CreateUser;
 using Application.Features.Commands.Users.DeleteUser;
 using Application.Features.Commands.Users.EmailConfirmation;
+using Application.Features.Commands.Users.RegisterUser;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

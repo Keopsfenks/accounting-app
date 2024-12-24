@@ -9,4 +9,7 @@ public sealed class AppUser : IdentityUser<Guid> {
 	public string?   RefreshToken        { get; set; }
 	public DateTime? RefreshTokenExpires { get; set; }
 	public bool      IsDeleted           { get; set; } = false;
+
+	public ICollection<CompanyUsers> UserRoles { get; set; } = new List<CompanyUsers>();
+
 }

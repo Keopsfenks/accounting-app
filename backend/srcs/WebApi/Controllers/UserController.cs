@@ -16,7 +16,7 @@ public sealed class UserController : ApiController {
 		return Ok(response);
 	}
 	
-	[HttpPost]
+	[HttpPut]
 	public async Task<IActionResult> UpdateUser(UpdateRequest request) {
 		var response = await Mediator.Send(request);
 		return Ok(response);

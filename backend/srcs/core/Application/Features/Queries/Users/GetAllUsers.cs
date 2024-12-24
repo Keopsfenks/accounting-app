@@ -2,34 +2,45 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using TS.Result;
 
 namespace Application.Features.Queries.Users;
 
-public sealed record GetAllUsers() : IRequest<List<AppUser>> {
-	public int PageNumber { get; set; } = 1;
+public sealed record GetAllUsers() : IRequest<Result<List<AppUser>>> {
+	public int PageNumber { get; set; } = 0;
 	public int PageSize   { get; set; } = 10;
+
+	public string? Id { get; set; }
 }
-internal sealed class GetAllUsersHandler : IRequestHandler<GetAllUsers, List<AppUser>>
+internal sealed record GetAllUsersHandler(
+	UserManager<AppUser> userManager) : IRequestHandler<GetAllUsers, Result<List<AppUser>>>
 {
-	private readonly UserManager<AppUser> _userManager;
 
-	public GetAllUsersHandler(UserManager<AppUser> userManager)
+	public async Task<Result<List<AppUser>>> Handle(GetAllUsers request, CancellationToken cancellationToken)
 	{
-		_userManager = userManager;
-	}
+		int     pageNumber = request.PageNumber;
+		int     pageSize   = request.PageSize;
+		string? Id         = request.Id;
 
-	public async Task<List<AppUser>> Handle(GetAllUsers request, CancellationToken cancellationToken)
-	{
-		// Sayfa numarasını ve sayfa başına gösterilecek öğe sayısını alıyoruz
-		var pageNumber = request.PageNumber;
-		var pageSize   = request.PageSize;
 
-		// Veritabanından kullanıcıları getiriyoruz
-		List<AppUser> users = await _userManager.Users
-		                                        .OrderBy(p => p.FirstName)
-		                                        .Skip((pageNumber - 1) * pageSize)  // Skip: Önceki sayfalardaki öğeleri atlamak
-		                                        .Take(pageSize)                      // Take: Bu sayfada alacağımız öğe sayısını belirlemek
-		                                        .ToListAsync(cancellationToken);
+		List<AppUser> users;
+		if (Id is not null) {
+			users = await userManager.Users
+									 .Where(p => p.Id.ToString() == Id)
+									 .OrderBy(p => p.Id)
+									 .Include(p => p.UserRoles)
+									 .Skip(pageNumber * pageSize)
+									 .Take(pageSize)
+									 .ToListAsync(cancellationToken);
+			return users;
+		}
+
+		users = await userManager.Users
+								 .OrderBy(p => p.FirstName)
+								 .Skip((pageNumber) * pageSize)
+								 .Include(p => p.UserRoles)
+								 .Take(pageSize)
+								 .ToListAsync(cancellationToken);
 
 		return users;
 	}

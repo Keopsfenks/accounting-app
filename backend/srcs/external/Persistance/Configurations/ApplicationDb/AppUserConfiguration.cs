@@ -11,5 +11,10 @@ internal sealed class AppUserConfiguration : IEntityTypeConfiguration<AppUser> {
 		builder.HasQueryFilter(x => !x.IsDeleted);
 		builder.Property(p => p.FirstName).HasColumnType("varchar(50)");
 		builder.Property(p => p.LastName).HasColumnType("varchar(50)");
+
+		builder.HasMany(p => p.UserRoles)
+			   .WithOne(cu => cu.User)
+			   .HasForeignKey(cu => cu.UserId)
+			   .OnDelete(DeleteBehavior.Cascade);
 	}
 }

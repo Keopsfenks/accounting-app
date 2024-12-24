@@ -12,4 +12,10 @@
       <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.11" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="GenericRepository">
+        <HintPath>..\..\..\..\..\..\..\..\.nuget\packages\ts.entityframeworkcore.genericrepository\8.0.4\lib\net8.0\GenericRepository.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>

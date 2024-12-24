@@ -20,17 +20,13 @@ export class ApiServices {
 			}
 		});
 	}
-	async get(apiUrl: string, params?: object): Promise<object> {
+	async get<T>(apiUrl: string, params?: object): Promise<ResultModel<T>> {
 		try {
-			const response = await this.http.get(apiUrl, {
+			const response = await this.http.get<ResultModel<T>>(apiUrl, {
 				params: params
 			});
 
-			if (response.data) {
-				return response.data;
-			}
-
-			return ResultModel<never>;
+			return response.data;
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				console.error("Hata:", error.message);
@@ -42,10 +38,10 @@ export class ApiServices {
 	async post<T>(apiUrl: string, body: object): Promise<ResultModel<T>> {
 		try {
 			const response = await this.http.post<ResultModel<T>>(apiUrl, body);
+
 			return response.data;
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
-
 				console.error("Hata:", error.message);
 			}
 			throw error;

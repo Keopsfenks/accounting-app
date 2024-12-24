@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using GenericRepository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -15,7 +16,6 @@ public static class DependencyInjection {
 			conf.RegisterServicesFromAssemblies(typeof(DependencyInjection).Assembly);
 			conf.RegisterServicesFromAssemblies(typeof(AppUser).Assembly);
 		});
-		
 		return services;
 	}
 }

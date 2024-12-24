@@ -56,17 +56,16 @@ export default function RegisterPage() {
 
 	function onSubmit(values: z.infer<typeof formSchema>) {
 		setIsLoading(true)
-		// Normally, you would send this data to your server
-		console.log(values)
 		setTimeout(async () => {
 			setIsLoading(false)
-			const response = await http.post('/Auth/Register', {
+			console.log(values)
+			const response = await http.post<string>('/Auth/Register', {
 				"firstName": values.firstName,
 				"lastName": values.lastName,
 				"userName": values.username,
 				"email": values.email,
 				"password": values.password,
-				"isAdmin": false
+				"isAdmin": true
 			})
 
 			if (response.isSuccessful) {

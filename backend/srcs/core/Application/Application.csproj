@@ -8,9 +8,6 @@
 
     <ItemGroup>
       <Folder Include="Behaviors\" />
-      <Folder Include="Features\Commands\Companies\CreateCompany\" />
-      <Folder Include="Features\Commands\Companies\DeleteCompany\" />
-      <Folder Include="Features\Commands\Companies\UpdateCompany\" />
     </ItemGroup>
 
     <ItemGroup>
@@ -18,6 +15,7 @@
       <PackageReference Include="FluentEmail.Smtp" Version="3.0.2" />
       <PackageReference Include="MediatR" Version="12.4.1" />
       <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.11" />
+      <PackageReference Include="TS.EntityFrameworkCore.GenericRepository" Version="8.0.4" />
       <PackageReference Include="TS.Result" Version="8.0.13" />
     </ItemGroup>
 

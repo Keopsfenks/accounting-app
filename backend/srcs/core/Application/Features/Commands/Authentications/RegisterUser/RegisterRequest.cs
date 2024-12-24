@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using TS.Result;
 
-namespace Application.Features.Commands.Users.CreateUser;
+namespace Application.Features.Commands.Users.RegisterUser;
 
 public sealed record RegisterRequest(
 	string     FirstName,
