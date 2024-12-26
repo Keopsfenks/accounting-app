@@ -11,7 +11,6 @@ internal sealed class CompanyConfiguration : IEntityTypeConfiguration<Company>
 		builder.ToTable("Companies");
 		builder.Property(c => c.TaxId).HasColumnType("varchar(11)");
 		builder.HasKey(c => c.Id);
-		builder.HasQueryFilter(x => !x.IsDeleted);
 
 		builder.OwnsOne(c => c.Database,builder => {
 			builder.Property(property => property.Server).HasColumnName("Server");

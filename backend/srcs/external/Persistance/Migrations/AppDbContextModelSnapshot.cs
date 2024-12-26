@@ -55,8 +55,8 @@ namespace Persistance.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8f415f24-7cba-42a0-9fd3-b46e2a14a32e"),
-                            ConcurrencyStamp = "25c34742-507a-4ecc-a0be-b62071714fdf",
+                            Id = new Guid("947479b8-0a5f-4460-a6bd-00848628a676"),
+                            ConcurrencyStamp = "f2cc4904-2b96-4101-a7b0-cb582e507e18",
                             IsDeleted = false,
                             Name = "Admin",
                             NormalizedName = "ADMIN"
@@ -85,9 +85,6 @@ namespace Persistance.Migrations
 
                     b.Property<string>("FirstName")
                         .HasColumnType("varchar(50)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .HasColumnType("varchar(50)");
@@ -156,9 +153,6 @@ namespace Persistance.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -193,15 +187,13 @@ namespace Persistance.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                    b.Property<string>("RoleName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("CompanyId", "UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
 
                     b.HasIndex("UserId");
 
@@ -357,12 +349,6 @@ namespace Persistance.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.AppRole", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Domain.Entities.AppUser", "User")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
@@ -370,8 +356,6 @@ namespace Persistance.Migrations
                         .IsRequired();
 
                     b.Navigation("Company");
-
-                    b.Navigation("Role");
 
                     b.Navigation("User");
                 });

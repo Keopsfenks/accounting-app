@@ -14,6 +14,5 @@ public class CompanyUsers : BaseEntity {
 	public AppUser User   { get; set; } = null!;
 
 	public Guid    RoleId { get; set; }
-	[JsonIgnore]
-	public AppRole Role   { get; set; } = null!;
+	public string  RoleName { get; set; } = string.Empty;
 }

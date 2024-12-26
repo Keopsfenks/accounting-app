@@ -9,7 +9,6 @@ namespace Application;
 public static class DependencyInjection {
 	public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configurations) {
 		services.AddAutoMapper(typeof(DependencyInjection).Assembly);
-		
 		services.AddFluentEmail("info@emuhasebe.com").AddSmtpSender("localhost",2525);
 		
 		services.AddMediatR(conf => {

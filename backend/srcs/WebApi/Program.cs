@@ -11,6 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // My dependency injection extension method
 builder.Services.AddDefaultCors();
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddApplication(builder.Configuration);
 builder.Services.AddPersistance(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration);

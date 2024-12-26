@@ -1,19 +1,18 @@
-import React from "react";
-import { AppSidebar } from "@/components/app-sidebar"
+import React, {ReactNode} from "react";
 import {
 	SidebarInset,
 	SidebarProvider,
 } from "@/components/ui/sidebar"
+import AppSidebar from "@/components/sidebar/app-sidebar";
 
 export default function DashboardLayout({children}: {
-	children: React.ReactNode
+	children: ReactNode
 }) {
 	return (
 		<SidebarProvider>
-			<AppSidebar />
-			<SidebarInset>
-				<main>{children}</main>
-			</SidebarInset>
+			<AppSidebar>
+
+			</AppSidebar>
 		</SidebarProvider>
 	)
 }

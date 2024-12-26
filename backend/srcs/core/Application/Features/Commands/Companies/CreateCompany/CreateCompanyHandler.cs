@@ -5,7 +5,9 @@ using Domain.Events;
 using Domain.Repositories;
 using GenericRepository;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using TS.Result;
 
 namespace Application.Features.Commands.Companies.CreateCompany;
@@ -13,7 +15,7 @@ namespace Application.Features.Commands.Companies.CreateCompany;
 public sealed record CreateCompanyHandler(
 	ICompanyRepository companyRepository,
 	ICompanyUserRepository companyUserRepository,
-	UserManager<AppUser> userManager,
+	IHttpContextAccessor httpContextAccessor,
 	IUnitOfWork        unitOfWork,
 	IMapper            mapper,
 	IMediator		  mediator,
@@ -21,9 +23,8 @@ public sealed record CreateCompanyHandler(
 	public async Task<Result<string>> Handle(CreateCompanyRequest request, CancellationToken cancellationToken) {
 		bool isTaxNumberExists = await companyRepository.AnyAsync(p=> p.TaxId  == request.TaxId, cancellationToken);
 
-		AppUser? user = await userManager.FindByIdAsync(request.UserId.ToString());
-
-		if (user == null) {
+		string? userId = httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(c => c.Type == "Id")?.Value;
+		if (string.IsNullOrEmpty(userId)) {
 			return Result<string>.Failure("User not found");
 		}
 
@@ -38,7 +39,7 @@ public sealed record CreateCompanyHandler(
 
 		companyService.MigrateCompanyDatabase(company);
 		try {
-			await mediator.Publish(new CompanyEvent(user.Id, company.Id, "create"), cancellationToken);
+			await mediator.Publish(new CompanyEvent(userId, company.Id, "create"), cancellationToken);
 		}
 		catch (Exception e) {
 			Result<string>.Failure(e.Message);

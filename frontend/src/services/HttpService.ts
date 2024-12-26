@@ -12,11 +12,12 @@ class ResultModel<T>{
 export class ApiServices {
 	private http: AxiosInstance;
 	constructor() {
+		authService.isAuthenticated();
 		this.http = axios.create({
 			baseURL: address,
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${localStorage.getItem(authService.token)}`,
+				Authorization: `Bearer ${authService.token}`,
 			}
 		});
 	}

@@ -10,8 +10,6 @@ internal sealed class CompanyUserConfiguration : IEntityTypeConfiguration<Compan
 
 		builder.HasKey(x => new { x.CompanyId, x.UserId, x.RoleId });
 
-		builder.HasQueryFilter(c => !c.IsDeleted);
-
 		builder.HasOne(c => c.Company)
 			   .WithMany(c => c.UserRoles) // Company navigation property'sini belirtelim
 			   .HasForeignKey(c => c.CompanyId)
@@ -21,11 +19,5 @@ internal sealed class CompanyUserConfiguration : IEntityTypeConfiguration<Compan
 			   .WithMany(u => u.UserRoles)
 			   .HasForeignKey(c => c.UserId)
 			   .OnDelete(DeleteBehavior.Cascade);
-
-		builder.HasOne(c => c.Role)
-			   .WithMany()
-			   .HasForeignKey(c => c.RoleId)
-			   .OnDelete(DeleteBehavior.Cascade);
-
 	}
 }

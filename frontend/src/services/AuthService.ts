@@ -11,7 +11,6 @@ export class AuthService {
 		if (this.token === "") {
 			return false;
 		}
-
 		const decode: JwtPayload | any = jwtDecode(this.token);
 		const exp = decode.exp;
 		const now = new Date().getTime() / 1000;
@@ -25,7 +24,7 @@ export class AuthService {
 		this.user.fullname = decode?.Fullname ?? '';
 		this.user.username = decode?.Username ?? '';
 
-		console.log(this.user);
+		console.log("user", this.user);
 
 		return true;
 	}

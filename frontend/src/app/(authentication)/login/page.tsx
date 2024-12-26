@@ -21,6 +21,7 @@ import {toast} from "@/hooks/use-toast";
 import {http} from "@/services/HttpService";
 import {LoginModel} from "@/ResponseModel/LoginModel";
 import {ToastAction} from "@/components/ui/toast";
+import {authService} from "@/services/AuthService";
 
 export default function LoginPage() {
 	const router = useRouter()
@@ -46,6 +47,8 @@ export default function LoginPage() {
 			if (response.isSuccessful) {
 				// @ts-ignore
 				localStorage.setItem("token", response.data.token);
+				authService.isAuthenticated();
+				console.log("Auth Service", authService);
 				toast({
 					variant: "default",
 					title: "Success",

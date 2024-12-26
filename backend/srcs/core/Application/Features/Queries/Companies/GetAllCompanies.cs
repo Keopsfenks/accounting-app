@@ -13,9 +13,9 @@ namespace Application.Features.Queries.Companies;
 public sealed record GetAllCompanies() : IRequest<Result<List<Company>>> {
 	public int     PageNumber { get; set; } = 0;
 	public int     PageSize   { get; set; } = 10;
-	public string? Id     { get; set; }
+	public string? Id         { get; set; }
 }
-internal sealed record GetAllUsersHandler(
+internal sealed record GetAllCompaniesHandler(
 	ICompanyRepository companyRepository) : IRequestHandler<GetAllCompanies, Result<List<Company>>>
 {
 
@@ -23,7 +23,7 @@ internal sealed record GetAllUsersHandler(
 	{
 		int     pageNumber = request.PageNumber;
 		int     pageSize   = request.PageSize;
-		string? Id     = request.Id;
+		string? Id         = request.Id;
 
 		List<Company> companies;
 

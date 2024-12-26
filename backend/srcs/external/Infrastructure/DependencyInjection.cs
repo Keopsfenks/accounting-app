@@ -1,6 +1,11 @@
 ﻿using System.Reflection;
+using Domain.Entities;
+using Domain.Repositories;
 using Infrastructure.Authentication.Options;
+using Infrastructure.Companies.Attributes;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Scrutor;
@@ -17,7 +22,13 @@ public static class DependencyInjection {
 			options.DefaultChallengeScheme    = JwtBearerDefaults.AuthenticationScheme;
 		}).AddJwtBearer();
 		services.AddAuthorization();
-		
+
+		services.AddScoped<IAsyncAuthorizationFilter, CompanyAuthorizationFilter>(provider =>
+		{
+
+			return new CompanyAuthorizationFilter(provider.GetRequiredService<ICompanyUserRepository>(), "", provider.GetRequiredService<RoleManager<AppRole>>());
+		});
+
 		services.Scan(action => {
 			action
 				.FromAssemblies(Assembly.GetExecutingAssembly())

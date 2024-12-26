@@ -15,11 +15,6 @@ public sealed record DeleteCompanyHandler(
 	IMediator mediator) : IRequestHandler<DeleteCompanyRequest, Result<string>> {
 	public async Task<Result<string>> Handle(DeleteCompanyRequest request, CancellationToken cancellationToken) {
 		Company company = await companyRepository.GetByExpressionWithTrackingAsync(p => p.Id == request.companyId, cancellationToken);
-		AppUser? user = await userManager.FindByIdAsync(request.UserId.ToString());
-
-		if (user == null) {
-			return Result<string>.Failure("User not found");
-		}
 		if (company is null)
 		{
 			return Result<string>.Failure("Şirket bulunamadı");

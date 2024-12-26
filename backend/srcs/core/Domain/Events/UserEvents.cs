@@ -1,24 +1,17 @@
-﻿using Domain.Entities;
-using Domain.Repositories;
+﻿#nullable enable
+using Domain.Entities;
 using FluentEmail.Core;
-using GenericRepository;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
 namespace Domain.Events;
 
-public sealed class UserEvents : INotification {
-	public Guid   Id { get; private set; }
-
-	public UserEvents(Guid ıd) {
-		Id = ıd;
-	}
+public sealed class UserEvents(Guid ıd) : INotification {
+	public Guid   Id { get; private set; } = ıd;
 }
 
 public sealed class UserEventsHandler(
 	UserManager<AppUser>   userManager,
-	ICompanyUserRepository companyUserRepository,
-	IUnitOfWork            unitOfWork,
 	IFluentEmail           fluentEmail) : INotificationHandler<UserEvents> {
 	public async Task Handle(UserEvents notification, CancellationToken cancellationToken) {
 		AppUser? user = await userManager.FindByIdAsync(notification.Id.ToString());
