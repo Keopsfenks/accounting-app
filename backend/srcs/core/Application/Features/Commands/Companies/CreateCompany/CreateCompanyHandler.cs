@@ -34,7 +34,6 @@ public sealed record CreateCompanyHandler(
 
 		Company company = mapper.Map<Company>(request);
 		await companyRepository.AddAsync(company, cancellationToken);
-
 		await unitOfWork.SaveChangesAsync(cancellationToken);
 
 		companyService.MigrateCompanyDatabase(company);

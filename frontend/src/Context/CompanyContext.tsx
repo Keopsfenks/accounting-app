@@ -1,14 +1,13 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
-import { Sidebar, SidebarHeader } from "@/components/ui/sidebar";
-import CompanyHeader from "@/components/sidebar/sidebar-header";
-import { http } from "@/services/HttpService";
-import { CompanyModel } from "@/ResponseModel/CompanyModel";
-import { Company } from "@/Models/Company";
-import {toast} from "@/hooks/use-toast";
+import React, {createContext, useContext, useState, useEffect, FC, ReactNode} from 'react';
+import {http} from "@/services/HttpService";
+import {CompanyModel} from "@/ResponseModel/CompanyModel";
+import {Company} from "@/Models/Company";
 
-export default function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
+const CompanyContext = createContext<Company[] | undefined>(undefined);
+
+export const CompanyProvider: FC<{ children: ReactNode }> = ({ children }) => {
 	const [companies, setCompanies] = useState<Company[]>([]);
 
 	useEffect(() => {
@@ -47,23 +46,17 @@ export default function AppSidebar({...props}: React.ComponentProps<typeof Sideb
 		getUserToCompanies().finally();
 	}, []);
 
-	useEffect(() => {
-		toast({
-			variant: "default",
-			title: "Success",
-			description: "Loading companies successfully",
-		})
-	}, [companies]);  // companies state değiştiğinde çalışacak
-
 	return (
-		<Sidebar collapsible="icon" {...props}>
-			<SidebarHeader>
-				{companies.length > 0 ? (
-					<CompanyHeader companies={companies} />
-				) : (
-					<p>Loading companies...</p>
-				)}
-			</SidebarHeader>
-		</Sidebar>
+		<CompanyContext.Provider value={companies}>
+			{children}
+		</CompanyContext.Provider>
 	);
-}
+};
+
+export const useCompanies = () => {
+	const context = useContext(CompanyContext);
+	if (context === undefined) {
+		throw new Error('useCompanies must be used within a CompanyProvider');
+	}
+	return context;
+};

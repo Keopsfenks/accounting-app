@@ -25,17 +25,6 @@ public sealed class AppDbContext : IdentityDbContext<AppUser, AppRole, Guid>, IU
 
 		builder.ApplyConfigurationsFromAssembly(typeof(DependencyInjection).Assembly);
 		SeedRoles(builder);
-
-		builder.Entity<Company>(entity =>
-		{
-			entity.OwnsOne(c => c.Database, db =>
-			{
-				db.Property(d => d.Server).IsRequired().HasColumnName("Server");
-				db.Property(d => d.DatabaseName).IsRequired().HasColumnName("DatabaseName");
-				db.Property(d => d.UserId).IsRequired().HasColumnName("UserId");
-				db.Property(d => d.Password).IsRequired().HasColumnName("Password");
-			});
-		});
 	}
 
 	private void SeedRoles(ModelBuilder builder) {

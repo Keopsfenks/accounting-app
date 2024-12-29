@@ -11,10 +11,7 @@ using WebApi.Abstractions;
 namespace WebApi.Controllers;
 
 [Authorize]
-public sealed class CompanyController : ApiController{
-	public CompanyController(IMediator mediator) : base(mediator) {
-	}
-
+public sealed class CompanyController(IMediator mediator) : ApiController(mediator) {
 	[HttpPost]
 	public async Task<IActionResult> CreateCompany(CreateCompanyRequest request) {
 		var response = await Mediator.Send(request);

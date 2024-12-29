@@ -6,11 +6,29 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Persistance.Migrations
 {
     /// <inheritdoc />
-    public partial class mg0 : Migration
+    public partial class mg32 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "CashRegister",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CurrencyType = table.Column<int>(type: "int", nullable: true),
+                    DepositAmount = table.Column<decimal>(type: "money", nullable: false),
+                    WithdrawalAmount = table.Column<decimal>(type: "money", nullable: false),
+                    BalanceAmount = table.Column<decimal>(type: "money", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CashRegister", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Companies",
                 columns: table => new
@@ -214,7 +232,7 @@ namespace Persistance.Migrations
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "ConcurrencyStamp", "IsDeleted", "Name", "NormalizedName" },
-                values: new object[] { new Guid("947479b8-0a5f-4460-a6bd-00848628a676"), "f2cc4904-2b96-4101-a7b0-cb582e507e18", false, "Admin", "ADMIN" });
+                values: new object[] { new Guid("c5f2ddd0-c0dd-4b09-af5e-337db927ce9c"), "716c592a-ccde-43f7-9ade-0371aca90bd0", false, "Admin", "ADMIN" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -277,6 +295,9 @@ namespace Persistance.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "CashRegister");
 
             migrationBuilder.DropTable(
                 name: "CompanyUsers");

@@ -1,18 +1,14 @@
 import React, {ReactNode} from "react";
-import {
-	SidebarInset,
-	SidebarProvider,
-} from "@/components/ui/sidebar"
-import AppSidebar from "@/components/sidebar/app-sidebar";
+import {CompanyProvider} from "@/Context/CompanyContext";
+import DashboardHeader from "@/components/dashboard/dashboard-header";
 
 export default function DashboardLayout({children}: {
 	children: ReactNode
 }) {
 	return (
-		<SidebarProvider>
-			<AppSidebar>
-
-			</AppSidebar>
-		</SidebarProvider>
+		<CompanyProvider>
+			<DashboardHeader/>
+			{children}
+		</CompanyProvider>
 	)
 }

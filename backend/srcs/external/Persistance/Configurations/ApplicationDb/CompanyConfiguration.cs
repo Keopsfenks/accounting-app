@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Persistance.Configurations;
+namespace Persistance.Configurations.ApplicationDb;
 
 internal sealed class CompanyConfiguration : IEntityTypeConfiguration<Company>
 {
@@ -19,9 +19,9 @@ internal sealed class CompanyConfiguration : IEntityTypeConfiguration<Company>
 			builder.Property(property => property.Password).HasColumnName("Password");
 		});
 
-		builder.HasMany(c => c.UserRoles)         // Bir şirketin birden fazla kullanıcısı olabilir
-			   .WithOne(cu => cu.Company)         // Her CompanyUsers bir Company'e bağlıdır
-			   .HasForeignKey(cu => cu.CompanyId) // Foreign key ilişkilendirmesi
-			   .OnDelete(DeleteBehavior.Cascade); // Şirket silindiğinde ilişkili kullanıcılar da silinsin
+		builder.HasMany(c => c.UserRoles)
+			   .WithOne(cu => cu.Company)
+			   .HasForeignKey(cu => cu.CompanyId)
+			   .OnDelete(DeleteBehavior.Cascade);
 	}
 }

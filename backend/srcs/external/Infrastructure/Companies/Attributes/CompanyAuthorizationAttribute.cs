@@ -84,7 +84,7 @@ public sealed class CompanyAuthorizationFilter : IAsyncAuthorizationFilter
 		if (!string.IsNullOrEmpty(companyIdQuery) && Guid.TryParse(companyIdQuery, out Guid companyIdFromQuery))
 			return companyIdFromQuery;
 
-		if (context.HttpContext.Request.Method == "POST" || context.HttpContext.Request.Method == "PUT" || context.HttpContext.Request.Method == "DELETE")
+		if (context.HttpContext.Request.Method is "POST" or "PUT" or "DELETE")
 		{
 			var request = context.HttpContext.Request;
 			request.EnableBuffering();
@@ -101,7 +101,6 @@ public sealed class CompanyAuthorizationFilter : IAsyncAuthorizationFilter
 					if (Guid.TryParse(companyIdProp.GetString(), out Guid companyIdFromBody))
 						return companyIdFromBody;
 				}
-
 			}
 			catch {
 				// ignored

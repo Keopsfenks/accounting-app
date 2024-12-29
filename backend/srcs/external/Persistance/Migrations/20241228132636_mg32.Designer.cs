@@ -12,8 +12,8 @@ using Persistance.Contexts.ApplicationDb;
 namespace Persistance.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241226052728_mg0")]
-    partial class mg0
+    [Migration("20241228132636_mg32")]
+    partial class mg32
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,8 +58,8 @@ namespace Persistance.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("947479b8-0a5f-4460-a6bd-00848628a676"),
-                            ConcurrencyStamp = "f2cc4904-2b96-4101-a7b0-cb582e507e18",
+                            Id = new Guid("c5f2ddd0-c0dd-4b09-af5e-337db927ce9c"),
+                            ConcurrencyStamp = "716c592a-ccde-43f7-9ade-0371aca90bd0",
                             IsDeleted = false,
                             Name = "Admin",
                             NormalizedName = "ADMIN"
@@ -171,6 +171,38 @@ namespace Persistance.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Companies", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.CompanyEntities.CashRegister", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("BalanceAmount")
+                        .HasColumnType("money");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("CurrencyType")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("DepositAmount")
+                        .HasColumnType("money");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("WithdrawalAmount")
+                        .HasColumnType("money");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CashRegister");
                 });
 
             modelBuilder.Entity("Domain.Entities.CompanyUsers", b =>

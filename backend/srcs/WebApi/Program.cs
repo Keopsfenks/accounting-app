@@ -37,8 +37,29 @@ builder.Services.AddSwaggerGen(setup => {
 		}
 	};
 
+	setup.AddSecurityDefinition("companyId", new OpenApiSecurityScheme
+											   {
+												   In          = ParameterLocation.Header,  // Header'da olacak
+												   Name        = "companyId",               // Başlık adı
+												   Type        = SecuritySchemeType.ApiKey, // ApiKey türünde olacak
+												   Description = "Company ID header"        // Açıklama
+											   });
 	setup.AddSecurityDefinition(jwtSecuritySheme.Reference.Id, jwtSecuritySheme);
 
+	setup.AddSecurityRequirement(new OpenApiSecurityRequirement
+								   {
+									   {
+										   new OpenApiSecurityScheme
+										   {
+											   Reference = new OpenApiReference
+														   {
+															   Type = ReferenceType.SecurityScheme,
+															   Id = "companyId"
+														   }
+										   },
+										   new string[] { }
+									   }
+								   });
 	setup.AddSecurityRequirement(new OpenApiSecurityRequirement {
 		{ jwtSecuritySheme, Array.Empty<string>() }
 	});

@@ -5,9 +5,16 @@ using Persistance.Contexts;
 
 namespace Persistance.Services;
 
-internal sealed class CompanyService : ICompanyService {
-	public void MigrateCompanyDatabase(Company company) {
-		CompanyDbContext context = new(company);
-		context.Database.Migrate();
+internal sealed class CompanyService : ICompanyService
+{
+	public void MigrateCompanyDatabase(Company company)
+	{
+		using var context = new CompanyDbContext(company);
+		context.Database.EnsureCreated();
+
+		if (context.Database.GetPendingMigrations().Any())
+		{
+			context.Database.Migrate();
+		}
 	}
 }

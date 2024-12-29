@@ -12,8 +12,8 @@ public static class ExtensionsMiddleware {
 				AppUser user = new() {
 					UserName       = "admin",
 					Email          = "admin@admin.com",
-					FirstName      = "Taner",
-					LastName       = "Saydam",
+					FirstName      = "Semih",
+					LastName       = "Gürbüz",
 					EmailConfirmed = true
 				};
 
