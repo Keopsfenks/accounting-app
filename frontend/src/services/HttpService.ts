@@ -48,6 +48,32 @@ export class ApiServices {
 			throw error;
 		}
 	}
+	async put<T>(apiUrl: string, body: object): Promise<ResultModel<T>> {
+		try {
+			const response = await this.http.put<ResultModel<T>>(apiUrl, body);
+
+			return response.data;
+		} catch (error) {
+			if (axios.isAxiosError(error)) {
+				console.error("Hata:", error.message);
+			}
+			throw error;
+		}
+	}
+	async delete<T>(apiUrl: string, body?: object): Promise<ResultModel<T>> {
+		try {
+			const response = await this.http.delete<ResultModel<T>>(apiUrl, {
+				data: body
+			});
+
+			return response.data;
+		} catch (error) {
+			if (axios.isAxiosError(error)) {
+				console.error("Hata:", error.message);
+			}
+			throw error;
+		}
+	}
 }
 
 export const http = new ApiServices();

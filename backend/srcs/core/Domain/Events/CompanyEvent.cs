@@ -1,29 +1,41 @@
 ﻿#nullable enable
+	using System.Security.Claims;
 	using Domain.Entities;
 using Domain.Repositories;
 using GenericRepository;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Events;
 
-public sealed class CompanyEvent(string userId, Guid companyId, string type) : INotification {
-	public string type      { get; private set; } = type;
-	public string   UserId    { get; private set; } = userId;
-	public Guid   CompanyId { get; private set; } = companyId;
+public sealed class CompanyEvent(Guid company, string type) : INotification {
+	public string  type    { get; private set; } = type;
+	public Guid companyId { get; private set; } = company;
 }
 
 public sealed class CompanyEventHandler(
 	ICompanyUserRepository companyUserRepository,
 	ICompanyRepository     companyRepository,
 	IUnitOfWork            unitOfWork,
+	IHttpContextAccessor   httpContextAccessor,
 	UserManager<AppUser>   userManager,
 	RoleManager<AppRole>   roleManager) : INotificationHandler<CompanyEvent> {
 	public async Task Handle(CompanyEvent notification, CancellationToken cancellationToken) {
-		AppUser? user = await userManager.FindByIdAsync(notification.UserId);
-		Company? company = await companyRepository.FirstOrDefaultAsync(c => c.Id == notification.CompanyId, cancellationToken);
-		AppRole? role = await roleManager.FindByNameAsync("Admin");
 
+		if (httpContextAccessor.HttpContext is null)
+			throw new ArgumentNullException();
+
+		string? userId    = httpContextAccessor.HttpContext.User.FindFirstValue("Id");
+
+		if (string.IsNullOrEmpty(userId))
+			throw new ArgumentNullException();
+
+
+		Company? company = await companyRepository.FirstOrDefaultAsync(c => c.Id == notification.companyId, cancellationToken);
+		AppUser? user = await userManager.FindByIdAsync(userId);
+		AppRole? role = await roleManager.FindByNameAsync("Admin");
 
 		if (user is null)
 			throw new ArgumentNullException(nameof(user));

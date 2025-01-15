@@ -1,7 +1,16 @@
+import {Company} from "@/Models/Company";
+
+interface userModel {
+	RoleName: (value: userModel, index: number, array: userModel[]) => void;
+	UserRoles: [Company[]];
+}
+
 export interface CompanyModel {
-	id: string;
-	name: string;
-	taxNumber: string;
-	taxDepartment: string;
-	address: string;
+	Id: string;
+	Name: string;
+	TaxId: string;
+	TaxDepartment: string;
+	Address: string;
+	UserRoles: userModel[];
+
 }

@@ -1,10 +1,12 @@
 ﻿using Application.Features.Commands.Authentication;
+using Application.Features.Commands.Authentications.ChangeCompany;
 using Application.Features.Commands.Users.DeleteUser;
 using Application.Features.Commands.Users.EmailConfirmation;
 using Application.Features.Commands.Users.RegisterUser;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using WebApi.Abstractions;
 
 namespace WebApi.Controllers;
@@ -32,6 +34,13 @@ public sealed class AuthController : ApiController {
 	
 	[HttpDelete]
 	public async Task<IActionResult> DeleteUser(DeleteRequest request) {
+		var response = await Mediator.Send(request);
+		return Ok(response);
+	}
+
+	[HttpPost]
+	[Authorize]
+	public async Task<IActionResult> ChangeCompany(ChangeCompanyRequest request) {
 		var response = await Mediator.Send(request);
 		return Ok(response);
 	}

@@ -17,13 +17,13 @@ internal sealed record RegisterHandler(
 		bool userExists = await userManager.Users.AnyAsync(p => p.UserName == request.UserName, cancellationToken);
 		
 		if (userExists) {
-			return Result<string>.Failure("User already exists");
+			return (500, "User already exists");
 		}
 		
 		bool emailExists = await userManager.Users.AnyAsync(p => p.Email == request.Email, cancellationToken);
 		
 		if (emailExists) {
-			return Result<string>.Failure("Email already exists");
+			return (500, "Email already exists");
 		}
 
 		AppUser newUser = mapper.Map<AppUser>(request);
@@ -31,14 +31,14 @@ internal sealed record RegisterHandler(
 		IdentityResult result = await userManager.CreateAsync(newUser, request.Password);
 		
 		if (!result.Succeeded) {
-			return Result<string>.Failure(result.Errors.Select(s => s.Description).ToList());
+			return (500, result.Errors.Select(s => s.Description).ToList());
 		}
 
 		try {
 			await mediator.Publish(new UserEvents(newUser.Id),       cancellationToken);
 		}
 		catch (Exception e) {
-			return Result<string>.Failure(e.Message);
+			return (500, e.Message);
 		}
 
 

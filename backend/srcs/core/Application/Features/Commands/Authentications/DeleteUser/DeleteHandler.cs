@@ -15,13 +15,13 @@ internal sealed record DeleteHandler(
 		AppUser? user = await userManager.FindByIdAsync(request.Id.ToString());
 
 		if (user == null) {
-			return Result<string>.Failure("User not found");
+			return (500, "User not found");
 		}
 
 		IdentityResult result = await userManager.DeleteAsync(user);
 
 		if (!result.Succeeded) {
-			return Result<string>.Failure(result.Errors.Select(s => s.Description).ToList());
+			return (500, result.Errors.Select(s => s.Description).ToList());
 		}
 
 		return Result<string>.Succeed("User deleted successfully");

@@ -11,5 +11,4 @@ public class Company : BaseEntity {
 	public Database Database      { get; set; } = new(string.Empty, string.Empty, string.Empty, string.Empty);
 
 	public ICollection<CompanyUsers> UserRoles { get; set; } = new List<CompanyUsers>();
-	// Navigation Property
 }

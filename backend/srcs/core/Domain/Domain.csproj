@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <PackageReference Include="Ardalis.SmartEnum" Version="8.2.0" />
+      <PackageReference Include="Ardalis.SmartEnum.EFCore" Version="8.2.0" />
       <PackageReference Include="FluentEmail.Core" Version="3.0.2" />
       <PackageReference Include="MediatR" Version="12.4.1" />
       <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.11" />
@@ -16,6 +17,9 @@
     <ItemGroup>
       <Reference Include="GenericRepository">
         <HintPath>..\..\..\..\..\..\..\..\.nuget\packages\ts.entityframeworkcore.genericrepository\8.0.4\lib\net8.0\GenericRepository.dll</HintPath>
+      </Reference>
+      <Reference Include="Microsoft.AspNetCore.Http.Abstractions">
+        <HintPath>..\..\..\..\..\..\..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.11\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
       </Reference>
     </ItemGroup>
 

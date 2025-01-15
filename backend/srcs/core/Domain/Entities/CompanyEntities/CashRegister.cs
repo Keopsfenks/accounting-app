@@ -9,4 +9,5 @@ public sealed class CashRegister : BaseEntity {
 	public decimal          DepositAmount    { get; set; }
 	public decimal          WithdrawalAmount { get; set; }
 	public decimal          BalanceAmount    { get; set; }
+	public List<CashRegisterDetail>? Details { get; set; }
 }

@@ -4,10 +4,12 @@ using Domain.Repositories;
 using Infrastructure.Authentication.Options;
 using Infrastructure.Companies.Attributes;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Persistance.Services.Interface;
 using Scrutor;
 
 namespace Infrastructure;
@@ -23,10 +25,8 @@ public static class DependencyInjection {
 		}).AddJwtBearer();
 		services.AddAuthorization();
 
-		services.AddScoped<IAsyncAuthorizationFilter, CompanyAuthorizationFilter>(provider =>
-		{
-
-			return new CompanyAuthorizationFilter(provider.GetRequiredService<ICompanyUserRepository>(), "", provider.GetRequiredService<RoleManager<AppRole>>());
+		services.AddScoped<IAsyncAuthorizationFilter, CompanyAuthorizationFilter>(provider => {
+			return new CompanyAuthorizationFilter(provider.GetRequiredService<ICompanyUserRepository>(), "", provider.GetRequiredService<RoleManager<AppRole>>(), provider.GetRequiredService<IHttpContextAccessor>());
 		});
 
 		services.Scan(action => {

@@ -8,6 +8,9 @@
 
     <ItemGroup>
       <Folder Include="Behaviors\" />
+      <Folder Include="Features\Commands\CashProceeds\CreateCashProceeds\" />
+      <Folder Include="Features\Commands\CustomerDetails\" />
+      <Folder Include="Features\Queries\Customers\" />
     </ItemGroup>
 
     <ItemGroup>

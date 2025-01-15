@@ -99,7 +99,7 @@ function MainNav({ className }: HTMLAttributes<HTMLElement>) {
 									</ul>
 								</NavigationMenuContent>
 							</NavigationMenuItem>
-						) : (
+						) :  (
 							<NavigationMenuItem key={`nav-item-${index}`}>
 								<NavigationMenuLink asChild>
 									<Link href={item.url} className="flex justify-center items-center h-[2.25rem] select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foregroundgap-1">

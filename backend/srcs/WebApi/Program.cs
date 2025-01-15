@@ -4,7 +4,10 @@ using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using Persistance;
+using Persistance.Services;
+using Persistance.Services.Interface;
 using WebApi.Middlewares;
+using WebApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,30 +39,7 @@ builder.Services.AddSwaggerGen(setup => {
 			Type = ReferenceType.SecurityScheme
 		}
 	};
-
-	setup.AddSecurityDefinition("companyId", new OpenApiSecurityScheme
-											   {
-												   In          = ParameterLocation.Header,  // Header'da olacak
-												   Name        = "companyId",               // Başlık adı
-												   Type        = SecuritySchemeType.ApiKey, // ApiKey türünde olacak
-												   Description = "Company ID header"        // Açıklama
-											   });
 	setup.AddSecurityDefinition(jwtSecuritySheme.Reference.Id, jwtSecuritySheme);
-
-	setup.AddSecurityRequirement(new OpenApiSecurityRequirement
-								   {
-									   {
-										   new OpenApiSecurityScheme
-										   {
-											   Reference = new OpenApiReference
-														   {
-															   Type = ReferenceType.SecurityScheme,
-															   Id = "companyId"
-														   }
-										   },
-										   new string[] { }
-									   }
-								   });
 	setup.AddSecurityRequirement(new OpenApiSecurityRequirement {
 		{ jwtSecuritySheme, Array.Empty<string>() }
 	});

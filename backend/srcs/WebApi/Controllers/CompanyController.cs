@@ -1,6 +1,7 @@
 ﻿using Application.Features.Commands.Companies.CreateCompany;
 using Application.Features.Commands.Companies.DeleteCompany;
 using Application.Features.Commands.Companies.UpdateCompany;
+using Application.Features.Commands.Companies.UpdateDatabase;
 using Application.Features.Queries.Companies;
 using Infrastructure.Companies.Attributes;
 using MediatR;
@@ -10,7 +11,6 @@ using WebApi.Abstractions;
 
 namespace WebApi.Controllers;
 
-[Authorize]
 public sealed class CompanyController(IMediator mediator) : ApiController(mediator) {
 	[HttpPost]
 	public async Task<IActionResult> CreateCompany(CreateCompanyRequest request) {
@@ -18,13 +18,13 @@ public sealed class CompanyController(IMediator mediator) : ApiController(mediat
 		return Ok(response);
 	}
 	[HttpDelete]
-	[CompanyAuthorization("Admin")]
+	//[CompanyAuthorization("Admin")]
 	public async Task<IActionResult> DeleteCompany(DeleteCompanyRequest request) {
 		var response = await Mediator.Send(request);
 		return Ok(response);
 	}
 	[HttpPut]
-	[CompanyAuthorization("Admin")]
+	//[CompanyAuthorization("Admin")]
 	public async Task<IActionResult> UpdateCompany(UpdateCompanyRequest request) {
 		var response = await Mediator.Send(request);
 		return Ok(response);
@@ -40,14 +40,9 @@ public sealed class CompanyController(IMediator mediator) : ApiController(mediat
 		return Ok(response);
 	}
 
-	[HttpGet]
+	[HttpPost]
 	[CompanyAuthorization]
-	public async Task<IActionResult> GetIdCompany([FromQuery] GetIdCompany request) {
-		var response = await Mediator.Send(request);
-		return Ok(response);
-	}
-	[HttpGet]
-	public async Task<IActionResult> GetUserToCompanies([FromQuery] GetUserToCompanies request) {
+	public async Task<IActionResult> UpdateCompanyDatabase(UpdateCompanyDatabase request) {
 		var response = await Mediator.Send(request);
 		return Ok(response);
 	}

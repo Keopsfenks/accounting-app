@@ -5,6 +5,10 @@ export class AuthService {
 	token: string = "";
 	user: UserModel = new UserModel();
 
+	constructor() {
+		this.isAuthenticated();
+	}
+
 	isAuthenticated(): boolean {
 		this.token = localStorage.getItem("token") ?? "";
 
@@ -23,6 +27,8 @@ export class AuthService {
 		this.user.email = decode?.Email ?? '';
 		this.user.fullname = decode?.Fullname ?? '';
 		this.user.username = decode?.Username ?? '';
+		this.user.companyId = decode?.CompanyId ?? '';
+		this.user.companies = JSON.parse(decode?.Companies) ?? [];
 
 		console.log("user", this.user);
 

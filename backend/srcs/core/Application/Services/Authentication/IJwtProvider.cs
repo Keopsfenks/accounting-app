@@ -4,5 +4,4 @@ using Domain.Entities;
 namespace Application.Services.Authentication;
 
 public interface IJwtProvider {
-	Task<LoginResponse> GenerateJwtToken(AppUser user);
-}
+	Task<LoginResponse> GenerateJwtToken(AppUser user, Guid? companyId, List<Company> companies);}

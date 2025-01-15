@@ -1,12 +1,12 @@
 import {
-	BookUser, ClipboardList, ListMinus,
+	BookUser, Building2, ChartColumnStacked, ClipboardList, Landmark, ListMinus,
 	ListOrdered, ListPlus,
 	LucideIcon,
 	LucideLayoutDashboard,
-	Package, PackageCheck, PackageMinus, PackagePlus,
+	Package, PackageCheck, PackageMinus, PackagePlus, ShoppingCart,
 	UserMinus,
 	UserPlus,
-	Users
+	Users, Vault
 } from "lucide-react";
 
 class Navigation {
@@ -34,82 +34,76 @@ export const navItems: Navigation[] = [
 	},
 	{
 		title: "Customers",
-		url: "/dashboard",
+		url: "/customer",
 		icon: Users,
-		description: "Customer management",
+		description: "Customer management, product sales and invoice management",
 		isActive: true,
 		items: [
 			{
-				title: "Create a customer",
-				url: "/dashboard",
-				icon: UserPlus,
-				description: "Click to create a customer"
-			},
-			{
-				title: "Remove a customer",
-				icon: UserMinus,
-				url: "/dashboard",
-				description: "Click to remove a customer"
-			},
-			{
-				title: "View customers",
+				title: "Customer Management",
+				url: "/dashboard/customer?tab=management",
 				icon: BookUser,
-				url: "/dashboard",
-				description: "View all customers"
+				description: "Click to customer management"
+			},
+			{
+				title: "Product Sales",
+				url: "/dashboard/customer?tab=sales",
+				icon: ShoppingCart,
+				description: "Click to product sales"
+			},
+			{
+				title: "Invoice Management",
+				url: "/dashboard/customer?tab=invoice",
+				icon: ClipboardList,
+				description: "Click to invoice management"
 			}
 		]
 	},
 	{
 		title: "Companies",
-		url: "/dashboard",
+		url: "/company",
 		icon: Package,
-		description: "Company management",
+		description: "Company, cash register and bank management",
 		isActive: true,
 		items: [
 			{
-				title: "Create a company",
-				icon: PackagePlus,
-				url: "/dashboard",
-				description: "Click to create a company"
+				title: "Company Management",
+				icon: Building2,
+				url: "/dashboard/company?tab=company",
+				description: "Click to product management"
 			},
 			{
-				title: "Remove a company",
-				icon: PackageMinus,
-				url: "/dashboard",
-				description: "Click to remove a company"
+				title: "Cash Register Management",
+				icon: Vault,
+				url: "/dashboard/company?tab=cash-register",
+				description: "Click to cash register management"
 			},
 			{
-				title: "View companies",
-				icon: PackageCheck,
-				url: "/dashboard",
-				description: "View all companies"
+				title: "Bank Management",
+				icon: Landmark,
+				url: "/dashboard/company?tab=bank",
+				description: "Click to bank management"
 			}
 		]
 	},
 	{
 		title: "Products",
-		url: "/dashboard",
+		url: "/product",
 		icon: ListOrdered,
-		description: "Product management",
+		description: "Product and Category management",
 		isActive: true,
 		items: [
 			{
-				title: "Create a product",
-				url: "/dashboard",
-				icon: ListPlus,
-				description: "Click to create a product"
+				title: "Product Management",
+				url: "/dashboard/product?tab=product",
+				icon: ShoppingCart,
+				description: "Click to products management"
 			},
 			{
-				title: "Remove a product",
-				url: "/dashboard",
-				icon: ListMinus,
-				description: "Click to remove a product"
-			},
-			{
-				title: "View products",
-				url: "/dashboard",
-				icon: ClipboardList,
-				description: "View all products"
+				title: "Category Management",
+				url: "/dashboard/product?tab=category",
+				icon: ChartColumnStacked,
+				description: "Click to category management"
 			}
 		]
 	}

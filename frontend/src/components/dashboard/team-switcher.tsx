@@ -4,17 +4,9 @@ import {Company} from "@/Models/Company";
 import {useCompanies} from "@/Context/CompanyContext";
 import {Button} from "@/components/ui/button";
 import {cn} from "@/lib/utils";
-import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
-import {Check, ChevronsUpDown, LucideCommand, PlusCircle} from "lucide-react";
-import {
-	Command, CommandDialog,
-	CommandEmpty,
-	CommandGroup,
-	CommandInput,
-	CommandItem,
-	CommandList,
-	CommandSeparator
-} from "@/components/ui/command";
+import {Avatar} from "@/components/ui/avatar";
+import {ChevronsUpDown, LucideCommand} from "lucide-react";
+
 
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<typeof PopoverTrigger>
 
@@ -30,6 +22,14 @@ export default function TeamSwitcher({className} : TeamSwitcherProps) {
 		setSelectedTeam(companies[0]);
 	}, [companies]);
 
+/*	useEffect(() => {
+		http.post("Auth/ChangeCompany", {companyId: selectedTeam?.Id}).then(r => {
+			console.log(r);
+			localStorage.setItem("token", r.data.token);
+			window.location.reload();
+		}).finally()
+	}, [selectedTeam]);*/
+
 	return (
 		<Popover open={open} onOpenChange={setOpen}>
 			<PopoverTrigger asChild>
@@ -37,7 +37,7 @@ export default function TeamSwitcher({className} : TeamSwitcherProps) {
 				variant="outline"
 				role="combobox"
 				aria-expanded={open}
-				aria-label="Select a Company"
+				aria-label="Select a Page"
 				className={cn("w-[200px] justify-between", className)}
 				>
 					<Avatar className="items-center h-5 w-5">
@@ -48,9 +48,9 @@ export default function TeamSwitcher({className} : TeamSwitcherProps) {
 				</Button>
 			</PopoverTrigger>
 			<PopoverContent className="w-[200px] p-0">
-				<Command>
+{/*				<Command>
 					<CommandList>
-						<CommandInput  placeholder="Search Company..."/>
+						<CommandInput  placeholder="Search Page..."/>
 						<CommandEmpty>No company found.</CommandEmpty>
 						{companies.map((company) => (
 							<CommandItem
@@ -82,11 +82,11 @@ export default function TeamSwitcher({className} : TeamSwitcherProps) {
 							}}
 							>
 								<PlusCircle className="mr-2 h-5 w-5" />
-								Create Company
+								Create Page
 							</CommandItem>
 						</CommandGroup>
 					</CommandList>
-				</Command>
+				</Command>*/}
 			</PopoverContent>
 		</Popover>
 	)

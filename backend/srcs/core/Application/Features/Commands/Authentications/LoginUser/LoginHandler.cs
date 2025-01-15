@@ -1,6 +1,8 @@
 ﻿using Application.Services.Authentication;
 using Domain.Entities;
+using Domain.Repositories;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TS.Result;
@@ -9,7 +11,9 @@ namespace Application.Features.Commands.Authentication;
 
 internal sealed record LoginHandler(
 	UserManager<AppUser> userManager,
-	IJwtProvider  JwtProvider
+	IJwtProvider  JwtProvider,
+	ICompanyUserRepository companyUserRepository,
+	ICompanyRepository companyRepository
 	) : IRequestHandler<LoginRequest, Result<LoginResponse>> {
 	
 	public async Task<Result<LoginResponse>> Handle(LoginRequest request, CancellationToken cancellationToken) {
@@ -43,7 +47,32 @@ internal sealed record LoginHandler(
 			return (500,"User email is not confirmed");
 		}
 
-		var loginResponse = await JwtProvider.GenerateJwtToken(user);
+		var companyUsers = await companyUserRepository
+								.Where(p => p.UserId == user.Id)
+								.ToListAsync(cancellationToken);
+
+		if (!companyUsers.Any())
+			return await JwtProvider.GenerateJwtToken(user, null, new List<Company>());
+
+		var companyIds = companyUsers.Select(cu => cu.CompanyId).ToList();
+		var companies = await companyRepository
+							 .Where(c => companyIds.Contains(c.Id))
+							 .Select(c => new Company {
+														  Id            = c.Id,
+														  Name          = c.Name,
+														  TaxId         = c.TaxId,
+														  TaxDepartment = c.TaxDepartment,
+														  Address       = c.Address,
+														  Database      = c.Database,
+														  CreatedAt     = c.CreatedAt,
+														  UpdatedAt     = c.UpdatedAt,
+														  UserRoles = c
+																	 .UserRoles.Where(ur => ur.UserId == user.Id)
+																	 .ToList()
+													  })
+							 .ToListAsync(cancellationToken);
+
+		var loginResponse = await JwtProvider.GenerateJwtToken(user, companies.First().Id, companies);
 
 		return loginResponse;
 	}
