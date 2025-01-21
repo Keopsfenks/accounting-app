@@ -1,0 +1,19 @@
+﻿using System.Text.Json.Serialization;
+using Domain.Abstractions;
+
+namespace Domain.Entities.CompanyEntities;
+
+public sealed class CashRegisterDetail : BaseEntity {
+
+	public Dictionary<string, Guid>  Processor        { get;  set; }
+	public string                    Date             {  get; set; }
+	public string                    Description      { get;  set; } = string.Empty;
+	public decimal                   DepositAmount    { get;  set; }
+	public decimal                   WithdrawalAmount { get;  set; }
+	public Dictionary<string, Guid?> Opposite         { get;  set; }
+
+	[JsonIgnore]
+	public CashRegister CashRegister { get; set; }
+	public Guid CashRegisterId       { get; set; }
+
+}
